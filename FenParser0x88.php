@@ -556,7 +556,7 @@ class FenParser0x88
                             }
                         }
                     }
-                    
+
                     break;
                 // Sliding pieces
                 case 0x05:
@@ -1169,7 +1169,7 @@ class FenParser0x88
     {
         if (is_string($move)) $move = array('m' => $move);
 
-        $move["m"] = preg_replace("/([a-h])([a-h])([0-8])/s", "$1x$2$3", $move["m"]);
+        $move["m"] = preg_replace("/([a-h])([a-h])([0-8])/s", "$1$2$3", $move["m"]);
 
         if (isset($move['m'])) {
             if ($move['m'] == '--') {
