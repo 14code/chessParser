@@ -98,7 +98,7 @@ class JsonToPgnParser
             if(!empty($move["variations"])){
                 foreach($move["variations"] as $variation){
                     if(!empty($variation)){
-                        $ret[] = "(" . $this->movesToPgn($variation, $startMove);
+                        $ret[] = "(" . $this->movesToPgn($variation, $startMove) . ")";
                     }
                 }
             }

@@ -1052,7 +1052,7 @@ class FenParser0x88
     {
         $king = $this->cache['king' . $kingColor];
         $index = strpos($moves, Board0x88Config::$keySquares[$king['s']]);
-        if ($index > 0) {
+        if ($index !== false) {
             if (strpos($moves, Board0x88Config::$keySquares[$king['s']], $index + 1) > 0) {
                 return 2;
             }
@@ -1586,7 +1586,7 @@ class FenParser0x88
             $castle = preg_replace($castleNotation, '', $castle);
             $this->setCastle($castle);
         } else {
-            $this->updateCastleForMove($movedPiece, $move['from']);
+            $this->updateCastleForMove($movedPiece, $move['from'], $move['to']);
         }
 
         if ($color === 'black') {
@@ -1611,7 +1611,7 @@ class FenParser0x88
 
     }
 
-    private function updateCastleForMove($movedPiece, $from)
+    private function updateCastleForMove($movedPiece, $from, $to = 0)
     {
         switch ($movedPiece) {
             case 0x03:
@@ -1635,6 +1635,21 @@ class FenParser0x88
                 if ($from === 119) {
                     $this->setCastle(preg_replace("/[k]/s", "", $this->getCastle()));
                 }
+                break;
+        }
+
+        switch ($to) {
+            case 0:
+                $this->setCastle(preg_replace("/[Q]/s", "", $this->getCastle()));
+                break;
+            case 7:
+                $this->setCastle(preg_replace("/[K]/s", "", $this->getCastle()));
+                break;
+            case 112:
+                $this->setCastle(preg_replace("/[q]/s", "", $this->getCastle()));
+                break;
+            case 119:
+                $this->setCastle(preg_replace("/[k]/s", "", $this->getCastle()));
                 break;
         }
 
