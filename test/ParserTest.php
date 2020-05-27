@@ -824,6 +824,18 @@ Rc8 Ne6+ 72. Kf6 d2 73. c5+ Kd7 0-1';
         $this->assertHasSquares($expectedSquares, $pawnMoves);
     }
 
+    public function testFenEnPassant()
+    {
+        $this->getParser('7k/4b2p/8/3pP3/8/8/8/5K2 w - d6 0 1')
+            ->getFromAndToByNotation('exd6');
+    }
+
+    public function testFenBotvinnikSozin()
+    {
+        $this->getParser('r3rnk1/pb2q3/1pp1p3/4Pp2/2P2Qn1/2N5/PPB2PPP/3R1RK1 w - f6 0 20')
+            ->getFromAndToByNotation('exf6');
+    }
+
     /**
      * @test
      */

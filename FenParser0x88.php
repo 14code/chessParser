@@ -1228,12 +1228,20 @@ class FenParser0x88
         } else {
             $notation = preg_replace("/=[QRBN]/", "", $notation);
             $notation = preg_replace("/[\+#!\?]/s", "", $notation);
-            $notation = preg_replace("/^(.*?)[QRBN]$/s", "$1", $notation);
+            $notation = preg_replace("/^(.*?)[QRBN]$/is", "$1", $notation);
             $pieceType = $this->getPieceTypeByNotation($notation, $color);
-
-            $capture = strpos($notation, "x") > 0;
-
             $ret['to'] = $this->getToSquareByNotation($notation);
+            $capture = $this->cache['board'][$ret['to']] != 0;
+
+            if (in_array($pieceType, [0x01, 0x09]) && $ret['to'] === Board0x88Config::$mapping[$this->getEnPassantSquare()]) {
+                if ($color === 'white') {
+                    $capture = $this->cache['board'][$ret['to'] - 16] === 0x09;
+                }
+
+                if ($color === 'black') {
+                    $capture = $this->cache['board'][$ret['to'] + 16] === 0x01;
+                }
+            }
             switch ($pieceType) {
                 case 0x01:
                 case 0x09:
@@ -1366,6 +1374,11 @@ class FenParser0x88
 
     public function getPromoteByNotation($notation)
     {
+        if (preg_match('/([QRBN])$/i', $notation, $matches)) {
+            $piece = strtoupper($matches[1]);
+            return Board0x88Config::$pieceAbbr[$piece];
+        }
+
         if (strstr($notation, '=')) {
             $piece = preg_replace("/^.*?=([QRBN]).*$/", '$1', $notation);
             return Board0x88Config::$pieceAbbr[$piece];
