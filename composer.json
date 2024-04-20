@@ -2,7 +2,7 @@
     "name": "DHTMLGoodies/chessParser",
     "description": "PGN to PHP array parser PHP class for conversion of Chess PGN files to PHP array or JSON.",
     "require": {
-      "phpunit/phpunit" : "^5.7"
+      "phpunit/phpunit" : "^10.5"
     },
     "autoload": {
       "classmap": ["./"]
