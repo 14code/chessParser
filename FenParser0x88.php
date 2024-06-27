@@ -1231,7 +1231,7 @@ class FenParser0x88
             $notation = preg_replace("/^(.*?)[QRBN]$/is", "$1", $notation);
             $pieceType = $this->getPieceTypeByNotation($notation, $color);
             $ret['to'] = $this->getToSquareByNotation($notation);
-            $capture = $this->cache['board'][$ret['to']] != 0;
+            $capture = $ret['to'] !== '' && $this->cache['board'][$ret['to']] != 0;
 
             if (in_array($pieceType, [0x01, 0x09]) && $ret['to'] === Board0x88Config::$mapping[$this->getEnPassantSquare()]) {
                 if ($color === 'white') {
