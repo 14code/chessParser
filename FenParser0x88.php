@@ -1233,7 +1233,7 @@ class FenParser0x88
             $ret['to'] = $this->getToSquareByNotation($notation);
             $capture = $ret['to'] !== '' && $this->cache['board'][$ret['to']] != 0;
 
-            if (in_array($pieceType, [0x01, 0x09]) && $ret['to'] === Board0x88Config::$mapping[$this->getEnPassantSquare()]) {
+            if (in_array($pieceType, [0x01, 0x09]) && $ret['to'] === @Board0x88Config::$mapping[$this->getEnPassantSquare()]) {
                 if ($color === 'white') {
                     $capture = $this->cache['board'][$ret['to'] - 16] === 0x09;
                 }
