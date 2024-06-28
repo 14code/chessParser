@@ -61,6 +61,11 @@ class PgnParser
         $this->pgnContent = $content;
     }
 
+    public function cleanPgnGames()
+    {
+        $this->pgnGames = null;
+    }
+
     private function cleanPgn()
     {
         $c = $this->pgnContent;
