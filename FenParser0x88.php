@@ -1199,6 +1199,10 @@ class FenParser0x88
             'to' => $fromAndTo['to'],
             'fen' => $this->getFen()
         );
+        
+        if (isset($fromAndTo['promoteTo'])) {
+            $newProperties['promoteTo'] = $fromAndTo['promoteTo'];
+        }
         return array_merge($move, $newProperties);
     }
 
