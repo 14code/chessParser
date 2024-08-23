@@ -170,6 +170,10 @@ class FenParser0x88
      */
     public function getPieceOnSquare($square)
     {
+        if (!isset($this->cache['board'][$square])) {
+            return null;
+        }
+
         $piece = $this->cache['board'][$square];
         if (isset($piece)) {
             return array(
