@@ -180,7 +180,7 @@ class FenParser0x88
                 'square' => Board0x88Config::$numberToSquareMapping[$square],
                 's' => $square,
                 't' => $piece,
-                'type' => Board0x88Config::$typeMapping[$piece],
+                'type' => isset(Board0x88Config::$typeMapping[$piece]) ? Board0x88Config::$typeMapping[$piece] : null,
                 'color' => $piece & 0x8 ? 'black' : 'white',
                 'sliding' => $piece & 0x4
             );
