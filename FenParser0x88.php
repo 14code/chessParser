@@ -85,11 +85,18 @@ class FenParser0x88
         return $ret;
     }
 
+    /**
+     * @throws \FenParser0x88Exception
+     */
     private function updateFenArray()
     {
         $fenParts = explode(" ", $this->fen);
         $castleCode = 0;
         for ($i = 0, $count = strlen($fenParts[2]); $i < $count; $i++) {
+            if (!isset(Board0x88Config::$castle[substr($fenParts[2], $i, 1)])) {
+                throw new \FenParser0x88Exception('This is not classical game, skip');
+            }
+
             $castleCode += Board0x88Config::$castle[substr($fenParts[2], $i, 1)];
         }
 
