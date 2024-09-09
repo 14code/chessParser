@@ -3,12 +3,12 @@
 class PgnParser
 {
 
-    private $pgnFile;
-    private $pgnContent;
-    private $pgnGames;
-    private $gameParser;
-    private $pgnGameParser;
-    private $_fullParsing = true;
+    protected $pgnFile;
+    protected $pgnContent;
+    protected $pgnGames;
+    protected $gameParser;
+    protected $pgnGameParser;
+    protected $_fullParsing = true;
 
     public function __construct($pgnFile = "", $fullParsing = true)
     {
@@ -25,7 +25,7 @@ class PgnParser
         $this->pgnGameParser = new PgnGameParser();
     }
 
-    private function sanitize($filePath)
+    protected function sanitize($filePath)
     {
         $extension = $this->getExtension($filePath);
         if ($extension != 'pgn') return null;
@@ -39,7 +39,8 @@ class PgnParser
         if (isset($tempPath) && substr($filePath, 0, strlen($tempPath)) == $tempPath) {
 
         } else {
-            if (substr($filePath, 0, 1) === "/") return null;
+            // why no absolute path?
+            //if (substr($filePath, 0, 1) === "/") return null;
         }
         $filePath = preg_replace("/[^0-9\.a-z_\-\/]/si", "", $filePath);
 
@@ -49,7 +50,7 @@ class PgnParser
 
     }
 
-    private function getExtension($filePath)
+    public function getExtension($filePath)
     {
         $tokens = explode(".", $filePath);
         return strtolower(array_pop($tokens));
@@ -66,7 +67,7 @@ class PgnParser
         $this->pgnGames = null;
     }
 
-    private function cleanPgn()
+    protected function cleanPgn()
     {
         $c = $this->pgnContent;
 
@@ -98,12 +99,12 @@ class PgnParser
         return self::getPgnGamesAsArray($pgn);
     }
 
-    private function splitPgnIntoGames($pgnString)
+    protected function splitPgnIntoGames($pgnString)
     {
         return $this->getPgnGamesAsArray($pgnString);
     }
 
-    private function getPgnGamesAsArray($pgn)
+    protected function getPgnGamesAsArray($pgn)
     {
         $ret = array();
         $content = "\n\n" . $pgn;
@@ -192,7 +193,7 @@ class PgnParser
         return $this->getParsedGames(true);
     }
 
-    private function getParsedGames($short = false)
+    protected function getParsedGames($short = false)
     {
         $games = $this->getUnparsedGames();
         $ret = array();
@@ -209,7 +210,7 @@ class PgnParser
     }
 
 
-    private function toShortVersion($branch)
+    protected function toShortVersion($branch)
     {
         foreach ($branch as &$move) {
 
@@ -232,7 +233,7 @@ class PgnParser
     }
 
 
-    private function getParsedGame($unParsedGame)
+    protected function getParsedGame($unParsedGame)
     {
         $this->pgnGameParser->setPgn($unParsedGame);
         $ret = $this->pgnGameParser->getParsedData();
@@ -242,7 +243,7 @@ class PgnParser
         return $ret;
     }
 
-    private function getParsedGameShort($unParsedGame)
+    protected function getParsedGameShort($unParsedGame)
     {
         $this->pgnGameParser->setPgn($unParsedGame);
         $ret = $this->pgnGameParser->getParsedData();
